@@ -1,2 +1,2 @@
 #!/bin/bash
-ls -ltrh | -mtime 10
+ls -1t | head
