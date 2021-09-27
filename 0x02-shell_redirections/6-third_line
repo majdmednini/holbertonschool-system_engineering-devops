@@ -1,2 +1,2 @@
 #!/bin/bash
-tail -10 iacta
+head 3 incta | tail 3 
