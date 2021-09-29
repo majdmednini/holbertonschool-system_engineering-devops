@@ -1,2 +1,2 @@
 #!/bin/bash
-echo ${INPUT##*/}:/action
+export PATH=$PATH:/action
