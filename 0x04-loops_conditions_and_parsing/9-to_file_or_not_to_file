@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin
 if [[ -e "school" ]]
 then
     echo "school file exists"
