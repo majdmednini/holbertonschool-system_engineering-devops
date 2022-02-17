@@ -1,0 +1,13 @@
+i=0
+
+while [ $i -lt 9 ]
+do
+  echo "Best School"
+  ((i++))
+  if [[ "$i" == '9' ]]; then
+    break
+  fi
+done
+
+echo "Hi"
+echo "Best School"
