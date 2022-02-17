@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#Bash script that displays Best School 10 times.
 n=0
 
 while [ $n -le 9 ]
