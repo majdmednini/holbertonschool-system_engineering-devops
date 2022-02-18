@@ -8,5 +8,5 @@ do
 sleep 2s
         echo "To infinity and beyond" 
 	((n++))
-done
 echo "^C"
+done
