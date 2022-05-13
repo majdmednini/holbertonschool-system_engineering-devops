@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
 # Bash script that accepts one argument
-if [[ "$(whoami)" != "any_name" ]]; then
-  echo "root"
-  whoami
-  exit 1
-fi
+sudo -u "$1" whoami
 
