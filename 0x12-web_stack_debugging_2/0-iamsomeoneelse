@@ -2,7 +2,7 @@
 # Bash script that accepts one argument
 if [[ "$(whoami)" != "any_name" ]]; then
   echo "root"
-  whoami [OPTION]
+  whoami
   exit 1
 fi
 
