@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Bash script that accepts one argument
+if [[ "$(whoami)" != "any_name" ]]; then
+  echo "root"
+  exit 1
+fi
