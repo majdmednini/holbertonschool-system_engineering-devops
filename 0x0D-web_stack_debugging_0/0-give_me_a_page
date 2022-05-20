@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# debugging
+service apache2 --full-restart
+
