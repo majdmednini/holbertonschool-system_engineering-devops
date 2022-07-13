@@ -1,28 +1,22 @@
 #!/usr/bin/python3
-"""
-Uses https://jsonplaceholder.typicode.com along with an employee ID to
-return information about the employee's todo list progress
-"""
-
+"""Get todos from user."""
 import json
 import requests
 from sys import argv
 
-if __name__ == '__main__':
-    userId = argv[1]
-    user = requests.get("https://jsonplaceholder.typicode.com/users/{}".
-                        format(userId), verify=False).json()
-    todo = requests.get("https://jsonplaceholder.typicode.com/todos?userId={}".
-                        format(userId), verify=False).json()
-    username = user.get('username')
-    tasks = []
-    for task in todo:
-        task_dict = {}
-        task_dict["task"] = task.get('title')
-        task_dict["completed"] = task.get('completed')
-        task_dict["username"] = username
-        tasks.append(task_dict)
-    jsonobj = {}
-    jsonobj[userId] = tasks
-    with open("{}.json".format(userId), 'w') as jsonfile:
-        json.dump(jsonobj, jsonfile)
+if __name__ == "__main__":
+    todos = requests.get('https://jsonplaceholder.typicode.com/users/{}/todos'
+                         .format(argv[1])).json()
+
+    user = requests.get('https://jsonplaceholder.typicode.com/users/{}'
+                        .format(argv[1])).json()
+
+    user_dict = {str(user.get('id')): []}
+    for todo in todos:
+        td = {"task": todo.get('title'),
+              "completed": todo.get('completed'),
+              "username": user.get('username')}
+        user_dict[str(user.get('id'))].append(td)
+
+    with open(str(user.get('id'))+".json", 'w') as f:
+        json.dump(user_dict, f)

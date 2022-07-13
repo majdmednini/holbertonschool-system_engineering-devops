@@ -1,22 +1,17 @@
 #!/usr/bin/python3
-"""
-Uses https://jsonplaceholder.typicode.com along with an employee ID to
-return information about the employee's todo list progress
-"""
-
-import csv
+"""Get todos from user."""
 import requests
 from sys import argv
 
-if __name__ == '__main__':
-    userId = argv[1]
-    user = requests.get("https://jsonplaceholder.typicode.com/users/{}".
-                        format(userId), verify=False).json()
-    todo = requests.get("https://jsonplaceholder.typicode.com/todos?userId={}".
-                        format(userId), verify=False).json()
-    with open("{}.csv".format(userId), 'w', newline='') as csvfile:
-        taskwriter = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
-        for task in todo:
-            taskwriter.writerow([int(userId), user.get('username'),
-                                 task.get('completed'),
-                                 task.get('title')])
+if __name__ == "__main__":
+    todos = requests.get('https://jsonplaceholder.typicode.com/users/{}/todos'
+                         .format(argv[1]))
+    todos = todos.json()
+    user = requests.get('https://jsonplaceholder.typicode.com/users/{}'
+                        .format(argv[1]))
+    user = user.json()
+    with open(str(user.get('id'))+".csv", 'w') as f:
+        for todo in todos:
+            f.write('"{}","{}","{}","{}"\n'
+                    .format(user.get('id'), user.get('username'),
+                            todo.get('completed'), todo.get('title')))
