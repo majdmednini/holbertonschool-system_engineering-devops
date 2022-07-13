@@ -1,17 +1,25 @@
+
 #!/usr/bin/python3
-"""Get todos from user."""
+"""
+    Python script that, exports data in the CSV format.
+"""
+
+import csv
 import requests
-from sys import argv
+import sys
 
 if __name__ == "__main__":
-    todos = requests.get('https://jsonplaceholder.typicode.com/users/{}/todos'
-                         .format(argv[1]))
-    todos = todos.json()
-    user = requests.get('https://jsonplaceholder.typicode.com/users/{}'
-                        .format(argv[1]))
-    user = user.json()
-    with open(str(user.get('id'))+".csv", 'w') as f:
-        for todo in todos:
-            f.write('"{}","{}","{}","{}"\n'
-                    .format(user.get('id'), user.get('username'),
-                            todo.get('completed'), todo.get('title')))
+    id = sys.argv[1]
+    usr_url = "https://jsonplaceholder.typicode.com/users/{}".format(id)
+    tds_url = "https://jsonplaceholder.typicode.com/users/{}/todos".format(id)
+
+    u = requests.get(usr_url).json()
+    todo = requests.get(tds_url).json()
+
+    with open('{}.csv'.format(id), 'w') as csv_file:
+        csv_writer = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
+        for t in todo:
+            row = [id, u.get("username"), t.get("completed"), t.get("title")]
+            row = [str(value) for value in row]
+            csv_writer.writerow(row)
+            
