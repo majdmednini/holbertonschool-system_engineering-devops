@@ -25,4 +25,3 @@ if __name__ == "__main__":
                           "username": u.get("username")})
         data = {"{}".format(id): tasks}
         json.dump(data, json_file)
-        
