@@ -1,22 +1,28 @@
+xecutable File  25 lines (21 sloc)  743 Bytes
+
 #!/usr/bin/python3
-"""Get todos from user."""
+"""
+    Python script that, exports data in the JSON format.
+"""
+
 import json
 import requests
-from sys import argv
+import sys
 
 if __name__ == "__main__":
-    todos = requests.get('https://jsonplaceholder.typicode.com/users/{}/todos'
-                         .format(argv[1])).json()
+    id = sys.argv[1]
+    usr_url = "https://jsonplaceholder.typicode.com/users/{}".format(id)
+    tds_url = "https://jsonplaceholder.typicode.com/users/{}/todos".format(id)
 
-    user = requests.get('https://jsonplaceholder.typicode.com/users/{}'
-                        .format(argv[1])).json()
+    u = requests.get(usr_url).json()
+    todo = requests.get(tds_url).json()
 
-    user_dict = {str(user.get('id')): []}
-    for todo in todos:
-        td = {"task": todo.get('title'),
-              "completed": todo.get('completed'),
-              "username": user.get('username')}
-        user_dict[str(user.get('id'))].append(td)
-
-    with open(str(user.get('id'))+".json", 'w') as f:
-        json.dump(user_dict, f)
+    with open('{}.json'.format(id), 'w') as json_file:
+        tasks = []
+        for t in todo:
+            tasks.append({"task": t.get("title"),
+                          "completed": t.get("completed"),
+                          "username": u.get("username")})
+        data = {"{}".format(id): tasks}
+        json.dump(data, json_file)
+        
